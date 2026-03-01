@@ -1,0 +1,35 @@
+.job-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.job-form input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.job-form button {
+  padding: 8px 15px;
+  background: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.job-list {
+  list-style: none;
+  padding: 0;
+}
+
+.job-list li {
+  background: white;
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

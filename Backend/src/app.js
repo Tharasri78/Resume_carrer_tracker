@@ -1,0 +1,52 @@
+const express = require("express");
+const cors = require("cors");
+
+const authRoutes = require("./routes/auth.routes");
+// const resumeRoutes = require("./routes/resume.routes");
+// const userRoutes = require("./routes/user.routes");
+// const jobRoutes = require("./routes/job.routes");
+// const dashboardRoutes = require("./routes/dashboard.routes");
+
+const app = express();
+
+// Middleware
+app.use(cors({
+  origin: ['http://localhost:5173', 'http://localhost:3000', 'http://127.0.0.1:5173'],
+  credentials: true
+}));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Routes
+app.use("/api/auth", authRoutes);
+// app.use("/api/resume", resumeRoutes);
+// app.use("/api/users", userRoutes);
+// app.use("/api/jobs", jobRoutes);
+// app.use("/api/dashboard", dashboardRoutes);
+
+// Test route
+app.get("/", (req, res) => {
+  res.json({ 
+    message: "API is running...",
+    endpoints: {
+      register: "POST /api/auth/register",
+      login: "POST /api/auth/login"
+    }
+  });
+});
+
+// 404 handler
+app.use((req, res) => {
+  res.status(404).json({ message: "Route not found" });
+});
+
+// Error handler
+app.use((err, req, res, next) => {
+  console.error("Server error:", err);
+  res.status(500).json({ 
+    message: "Internal server error",
+    error: err.message 
+  });
+});
+
+module.exports = app;
