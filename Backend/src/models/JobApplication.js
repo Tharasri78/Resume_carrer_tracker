@@ -1,8 +1,9 @@
+// src/models/JobApplication.js
 const mongoose = require("mongoose");
 
 const jobApplicationSchema = new mongoose.Schema(
   {
-    user: {
+    userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
@@ -15,21 +16,17 @@ const jobApplicationSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    appliedDate: {
-      type: Date,
-      required: true,
-    },
     status: {
       type: String,
       enum: ["Applied", "Interview", "Rejected", "Selected"],
       default: "Applied",
     },
-    followUpDate: {
+    appliedDate: {
       type: Date,
+      default: Date.now,
     },
-    notes: {
-      type: String,
-    },
+    followUpDate: Date,
+    notes: String,
   },
   { timestamps: true }
 );

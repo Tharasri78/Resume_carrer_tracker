@@ -2,10 +2,10 @@ const express = require("express");
 const cors = require("cors");
 
 const authRoutes = require("./routes/auth.routes");
-// const resumeRoutes = require("./routes/resume.routes");
-// const userRoutes = require("./routes/user.routes");
-// const jobRoutes = require("./routes/job.routes");
-// const dashboardRoutes = require("./routes/dashboard.routes");
+const resumeRoutes = require("./routes/resume.routes");
+const userRoutes = require("./routes/user.routes");
+const jobRoutes = require("./routes/job.routes");
+const dashboardRoutes = require("./routes/dashboard.routes");
 
 const app = express();
 
@@ -19,10 +19,10 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use("/api/auth", authRoutes);
-// app.use("/api/resume", resumeRoutes);
-// app.use("/api/users", userRoutes);
-// app.use("/api/jobs", jobRoutes);
-// app.use("/api/dashboard", dashboardRoutes);
+app.use("/api/resume", resumeRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/jobs", jobRoutes);
+app.use("/api/dashboard", dashboardRoutes);
 
 // Test route
 app.get("/", (req, res) => {

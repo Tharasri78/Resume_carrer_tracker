@@ -23,53 +23,82 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   // REGISTER
-  const register = async ({ name, email, password }) => {
-    setLoading(true);
-    setError(null);
+const register = async ({ name, email, password }) => {
+  setLoading(true);
+  setError(null);
 
-    try {
-      const { data } = await api.post("/auth/register", {
-        name,
-        email,
-        password,
-      });
+  try {
+    const response = await api.post("/auth/register", {
+      name,
+      email,
+      password,
+    });
 
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
+    const data = response.data;
 
-      setUser(data.user);
-      setIsAuthenticated(true);
-      navigate("/dashboard");
-    } catch (err) {
-      setError(err.response?.data?.message || "Registration failed");
-    } finally {
-      setLoading(false);
+    // 🔒 Guard
+    if (!data || !data.token || !data.user) {
+      throw new Error(data?.message || "Invalid register response");
     }
-  };
 
-  // LOGIN (🔥 FIXED)
-  const login = async (email, password) => {
-    setLoading(true);
-    setError(null);
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("user", JSON.stringify(data.user));
 
-    try {
-      const { data } = await api.post("/auth/login", {
-        email,
-        password,
-      });
+    setUser(data.user);
+    setIsAuthenticated(true);
+    navigate("/dashboard");
+  } catch (err) {
+    // 🔥 THIS LINE MATTERS
+    const message =
+      err.response?.data?.error ||
+      err.response?.data?.message ||
+      err.message ||
+      "Registration failed";
 
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
+    setError(message);
+    console.error("REGISTER ERROR:", message);
+  } finally {
+    setLoading(false);
+  }
+};
 
-      setUser(data.user);
-      setIsAuthenticated(true);
-      navigate("/dashboard");
-    } catch (err) {
-      setError(err.response?.data?.message || "Login failed");
-    } finally {
-      setLoading(false);
+// LOGIN
+const login = async (email, password) => {
+  setLoading(true);
+  setError(null);
+
+  try {
+    const response = await api.post("/auth/login", {
+      email,
+      password,
+    });
+
+    const data = response.data;
+
+    // 🔒 Guard
+    if (!data || !data.token || !data.user) {
+      throw new Error(data?.message || "Invalid login response");
     }
-  };
+
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("user", JSON.stringify(data.user));
+
+    setUser(data.user);
+    setIsAuthenticated(true);
+    navigate("/dashboard");
+  } catch (err) {
+    const message =
+      err.response?.data?.error ||
+      err.response?.data?.message ||
+      err.message ||
+      "Login failed";
+
+    setError(message);
+    console.error("LOGIN ERROR:", message);
+  } finally {
+    setLoading(false);
+  }
+};
 
   const logout = () => {
     localStorage.clear();

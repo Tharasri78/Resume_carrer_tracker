@@ -1,35 +1,21 @@
 const JobApplication = require("../models/JobApplication");
 
-exports.getDashboardStats = async (req, res) => {
-  const userId = req.user._id;
+const getDashboardStats = async (req, res) => {
+  try {
+    const userId = req.user._id;
 
-  const total = await JobApplication.countDocuments({ user: userId });
+    const total = await JobApplication.countDocuments({ user: userId });
+    const Applied = await JobApplication.countDocuments({ user: userId, status: "Applied" });
+    const Interview = await JobApplication.countDocuments({ user: userId, status: "Interview" });
+    const Rejected = await JobApplication.countDocuments({ user: userId, status: "Rejected" });
+    const Selected = await JobApplication.countDocuments({ user: userId, status: "Selected" });
 
-  const applied = await JobApplication.countDocuments({
-    user: userId,
-    status: "Applied",
-  });
-
-  const interview = await JobApplication.countDocuments({
-    user: userId,
-    status: "Interview",
-  });
-
-  const rejected = await JobApplication.countDocuments({
-    user: userId,
-    status: "Rejected",
-  });
-
-  const selected = await JobApplication.countDocuments({
-    user: userId,
-    status: "Selected",
-  });
-
-  res.json({
-    total,
-    applied,
-    interview,
-    rejected,
-    selected,
-  });
+    res.json({
+      stats: { total, Applied, Interview, Rejected, Selected }
+    });
+  } catch (err) {
+    res.status(500).json({ message: "Dashboard stats error" });
+  }
 };
+
+module.exports = { getDashboardStats };
