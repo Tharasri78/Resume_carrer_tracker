@@ -1,16 +1,16 @@
-import React, { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
 
-export const AuthContext = createContext();
+const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+  const navigate = useNavigate();
+
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -22,83 +22,60 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  // REGISTER
-const register = async ({ name, email, password }) => {
-  setLoading(true);
-  setError(null);
+  const register = async ({ name, email, password }) => {
+    setLoading(true);
+    setError(null);
 
-  try {
-    const response = await api.post("/auth/register", {
-      name,
-      email,
-      password,
-    });
+    try {
+      const { data } = await api.post("/auth/register", {
+        name,
+        email,
+        password,
+      });
 
-    const data = response.data;
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
 
-    // 🔒 Guard
-    if (!data || !data.token || !data.user) {
-      throw new Error(data?.message || "Invalid register response");
+      setUser(data.user);
+      setIsAuthenticated(true);
+      navigate("/dashboard");
+    } catch (err) {
+      setError(
+        err.response?.data?.message ||
+        err.response?.data?.error ||
+        "Registration failed"
+      );
+    } finally {
+      setLoading(false);
     }
+  };
 
-    localStorage.setItem("token", data.token);
-    localStorage.setItem("user", JSON.stringify(data.user));
+  const login = async (email, password) => {
+    setLoading(true);
+    setError(null);
 
-    setUser(data.user);
-    setIsAuthenticated(true);
-    navigate("/dashboard");
-  } catch (err) {
-    // 🔥 THIS LINE MATTERS
-    const message =
-      err.response?.data?.error ||
-      err.response?.data?.message ||
-      err.message ||
-      "Registration failed";
+    try {
+      const { data } = await api.post("/auth/login", {
+        email,
+        password,
+      });
 
-    setError(message);
-    console.error("REGISTER ERROR:", message);
-  } finally {
-    setLoading(false);
-  }
-};
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
 
-// LOGIN
-const login = async (email, password) => {
-  setLoading(true);
-  setError(null);
-
-  try {
-    const response = await api.post("/auth/login", {
-      email,
-      password,
-    });
-
-    const data = response.data;
-
-    // 🔒 Guard
-    if (!data || !data.token || !data.user) {
-      throw new Error(data?.message || "Invalid login response");
+      setUser(data.user);
+      setIsAuthenticated(true);
+      navigate("/dashboard");
+    } catch (err) {
+      setError(
+        err.response?.data?.message ||
+        err.response?.data?.error ||
+        "Login failed"
+      );
+    } finally {
+      setLoading(false);
     }
-
-    localStorage.setItem("token", data.token);
-    localStorage.setItem("user", JSON.stringify(data.user));
-
-    setUser(data.user);
-    setIsAuthenticated(true);
-    navigate("/dashboard");
-  } catch (err) {
-    const message =
-      err.response?.data?.error ||
-      err.response?.data?.message ||
-      err.message ||
-      "Login failed";
-
-    setError(message);
-    console.error("LOGIN ERROR:", message);
-  } finally {
-    setLoading(false);
-  }
-};
+  };
 
   const logout = () => {
     localStorage.clear();
@@ -109,17 +86,11 @@ const login = async (email, password) => {
 
   return (
     <AuthContext.Provider
-      value={{
-        user,
-        loading,
-        error,
-        isAuthenticated,
-        register,
-        login,
-        logout,
-      }}
+      value={{ user, loading, error, isAuthenticated, register, login, logout }}
     >
       {children}
     </AuthContext.Provider>
   );
 };
+
+export const useAuth = () => useContext(AuthContext);

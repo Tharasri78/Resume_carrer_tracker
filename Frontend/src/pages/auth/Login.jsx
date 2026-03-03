@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 
-import { useAuth } from '../../context/useAuth';
+import { useAuth } from '../../context/AuthContext';
 import '../../styles/auth.css';
 
 const Login = () => {

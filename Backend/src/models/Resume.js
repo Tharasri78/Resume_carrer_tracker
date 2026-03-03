@@ -5,47 +5,55 @@ const resumeSchema = new mongoose.Schema(
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
+      required: true,
       unique: true,
-      required: true
     },
 
-    personal: {
-      fullName: String,
-      phone: String,
-      location: String,
-      summary: String
-    },
-
-    education: [
-      {
-        institution: String,
-        degree: String,
-        startYear: String,
-        endYear: String
-      }
-    ],
+    fullName: String,
+    email: String,
+    phone: String,
+    location: String,
+    linkedin: String,
+    github: String,
+    summary: String,
 
     skills: [String],
 
-    projects: [
+    education: [
       {
-        title: String,
-        description: String,
-        technologies: String
-      }
+        degree: String,
+        institution: String,
+        year: String,
+        location: String,          // added - e.g. "COIMBATORE"
+        percentage: String,        // added - e.g. "83%" for HSLC
+      },
     ],
 
     experience: [
       {
+        title: String,
         company: String,
-        role: String,
-        startDate: String,
-        endDate: String,
-        description: String
-      }
-    ]
+        duration: String,
+        description: String,
+      },
+    ],
+
+    // ──────────── NEW ────────────
+    projects: [
+      {
+        title: String,
+        duration: String,          // e.g. "MAR 2024"
+        description: String,       // can contain bullets as \n separated text
+        techStack: String,         // e.g. "React.js, Node.js, Express.js, MongoDB"
+      },
+    ],
+
+    certifications: [String],     // simple array of certification strings
+    // ─────────────────────────────
   },
   { timestamps: true }
 );
+
+resumeSchema.index({ user: 1 });
 
 module.exports = mongoose.model("Resume", resumeSchema);

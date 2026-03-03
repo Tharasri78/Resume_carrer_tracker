@@ -1,19 +1,20 @@
-import api from "./axios";
+import API from "./axios";
 
-// Get all job applications
 export const getJobs = async () => {
-  const response = await api.get("/jobs");
-  return response.data;
+  const res = await API.get("/jobs");
+  return res.data;
 };
 
-// Create a new job application
-export const createJob = async (jobData) => {
-  const response = await api.post("/jobs", jobData);
-  return response.data;
+export const createJob = async (job) => {
+  const res = await API.post("/jobs", job);
+  return res.data;
 };
 
-// Update job application (status / notes / follow-up)
-export const updateJob = async (id, updateData) => {
-  const response = await api.put(`/jobs/${id}`, updateData);
-  return response.data;
+export const updateJobStatus = async (id, status) => {
+  const res = await API.put(`/jobs/${id}`, { status });
+  return res.data;
+};
+
+export const deleteJob = async (id) => {
+  await API.delete(`/jobs/${id}`);
 };
