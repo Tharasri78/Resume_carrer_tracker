@@ -148,20 +148,19 @@ body {
 
 /* Progress Bar */
 .progress-container {
-  height: 12px;
-  background: #e2e8f0;              /* balanced, not too bright */
-  border-radius: 9999px;
+  width: 100%;
+  height: 10px;
+  background: #e5e7eb;
+  border-radius: 8px;
   overflow: hidden;
-  margin: 20px 0 32px;
 }
 
 .progress-bar {
   height: 100%;
-  background: linear-gradient(90deg, var(--primary) 0%, #60a5fa 100%);
-  border-radius: 9999px;
-  transition: width 0.7s ease;
+  background: linear-gradient(90deg,#3b82f6,#2563eb);
+  border-radius: 8px;
+  transition: width 0.4s ease;
 }
-
 /* Quick Actions */
 .action-list {
   display: flex;

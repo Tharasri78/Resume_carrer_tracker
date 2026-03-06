@@ -20,47 +20,52 @@ export default function Resume() {
     education: [{ degree: "", institution: "", year: "" }],
   });
 
-  const [savedResume, setSavedResume] = useState(null);
-  const [saving, setSaving] = useState(false);
+  const [, setSavedResume] = useState(null);  const [saving, setSaving] = useState(false);
   const [justSaved, setJustSaved] = useState(false);
   const [loading, setLoading] = useState(true);
   const [exporting, setExporting] = useState(false);
   
   const previewRef = useRef(null);
+useEffect(() => {
+  const fetchResume = async () => {
+    try {
+      const res = await api.get("/resume");
 
-  // Load saved resume from backend
-  useEffect(() => {
-    const fetchResume = async () => {
-      try {
-        const res = await api.get("/resume");
-        if (res.data) {
-          setSavedResume(res.data);
-          setFormData({
-            fullName: res.data.fullName || "",
-            email: res.data.email || "",
-            phone: res.data.phone || "",
-            location: res.data.location || "",
-            linkedin: res.data.linkedin || "",
-            github: res.data.github || "",
-            summary: res.data.summary || "",
-            skills: res.data.skills?.join(", ") || "",
-            experiences: res.data.experience?.length
-              ? res.data.experience
-              : [{ title: "", company: "", duration: "", description: "" }],
-            education: res.data.education?.length
-              ? res.data.education
-              : [{ degree: "", institution: "", year: "" }],
-          });
-        }
-      } catch (err) {
-        console.error("Fetch resume failed:", err);
-      } finally {
+      if (!res.data) {
         setLoading(false);
+        return;
       }
-    };
-    fetchResume();
-  }, []);
 
+      const data = res.data;
+
+      setSavedResume(data);
+
+      setFormData({
+        fullName: data.fullName || "",
+        email: data.email || "",
+        phone: data.phone || "",
+        location: data.location || "",
+        linkedin: data.linkedin || "",
+        github: data.github || "",
+        summary: data.summary || "",
+        skills: data.skills?.join(", ") || "",
+        experiences: data.experience?.length
+          ? data.experience
+          : [{ title: "", company: "", duration: "", description: "" }],
+        education: data.education?.length
+          ? data.education
+          : [{ degree: "", institution: "", year: "" }]
+      });
+
+    } catch (err) {
+      console.error("Fetch resume failed:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchResume();
+}, []);
   const handleChange = (e, section = null, index = null) => {
     const { name, value } = e.target;
     if (section && index !== null) {

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
+import { getDashboardStats } from "../api/dashboard.api";
 import "../styles/dashboard.css";
 
 const Dashboard = () => {
+
   const { user, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
@@ -12,7 +14,7 @@ const Dashboard = () => {
     Applied: 0,
     Interview: 0,
     Rejected: 0,
-    Selected: 0,
+    Selected: 0
   });
 
   const [loading, setLoading] = useState(true);
@@ -23,22 +25,22 @@ const Dashboard = () => {
       navigate("/login");
       return;
     }
-    fetchStats();
-  }, [isAuthenticated, navigate]);
 
-  const fetchStats = async () => {
+    loadStats();
+
+  }, [isAuthenticated]);
+
+  const loadStats = async () => {
     try {
-      const token = localStorage.getItem("token");
-      const res = await fetch("http://localhost:5000/api/dashboard/stats", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
 
-      if (!res.ok) throw new Error("Dashboard data unavailable");
+      const data = await getDashboardStats();
+      setStats(data);
 
-      const data = await res.json();
-      setStats(data.stats);
     } catch (err) {
-      setError(err.message);
+
+      console.error(err);
+      setError("Dashboard data unavailable");
+
     } finally {
       setLoading(false);
     }
@@ -46,7 +48,7 @@ const Dashboard = () => {
 
   const successRate =
     stats.total > 0
-      ? Math.round(((stats.Interview + stats.Selected) / stats.total) * 100)
+      ? Math.round((stats.Selected / stats.total) * 100)
       : 0;
 
   if (loading) return <div className="page-center">Loading dashboard…</div>;
@@ -55,13 +57,13 @@ const Dashboard = () => {
     return (
       <div className="page-center error-state">
         <p>{error}</p>
-        <button onClick={fetchStats} className="primary-btn">Retry</button>
+        <button onClick={loadStats} className="primary-btn">Retry</button>
       </div>
     );
 
   return (
     <div className="dashboard-container">
-      {/* Header */}
+
       <header className="dashboard-header">
         <div className="header-left">
           <h1>Dashboard</h1>
@@ -69,19 +71,19 @@ const Dashboard = () => {
             Welcome back, <span className="user-name">{user?.name || "User"}</span>
           </p>
         </div>
+
         <div className="header-right">
           <span className="current-date">
             {new Date().toLocaleDateString("en-US", {
               weekday: "long",
               year: "numeric",
               month: "long",
-              day: "numeric",
+              day: "numeric"
             })}
           </span>
         </div>
       </header>
 
-      {/* KPI Cards */}
       <section className="kpi-grid">
         <KPI label="Total Applications" value={stats.total} color="blue" />
         <KPI label="Applied" value={stats.Applied} color="gray" />
@@ -90,10 +92,10 @@ const Dashboard = () => {
         <KPI label="Selected" value={stats.Selected} color="green" />
       </section>
 
-      {/* Main Content */}
       <div className="main-content-grid">
-        {/* Progress Panel */}
+
         <div className="panel progress-panel">
+
           <div className="panel-header">
             <h2>Application Progress</h2>
             <p className="success-rate">
@@ -116,15 +118,17 @@ const Dashboard = () => {
               </Link>
             </div>
           )}
+
         </div>
 
-        {/* Quick Actions */}
         <div className="panel actions-panel">
+
           <div className="panel-header">
             <h2>Quick Actions</h2>
           </div>
 
           <div className="action-list">
+
             <Link to="/jobs" className="action-card">
               <div className="action-content">
                 <h3>Manage Applications</h3>
@@ -140,24 +144,28 @@ const Dashboard = () => {
               </div>
               <span className="action-arrow">→</span>
             </Link>
+
           </div>
+
         </div>
+
       </div>
     </div>
   );
 };
 
 const KPI = ({ label, value, color }) => {
+
   const colorClasses = {
     blue: "kpi-blue",
     gray: "kpi-gray",
     purple: "kpi-purple",
     red: "kpi-red",
-    green: "kpi-green",
+    green: "kpi-green"
   };
 
   return (
-    <div className={`kpi-card ${colorClasses[color] || ""}`}>
+    <div className={`kpi-card ${colorClasses[color]}`}>
       <span className="kpi-label">{label}</span>
       <span className="kpi-value">{value.toLocaleString()}</span>
     </div>

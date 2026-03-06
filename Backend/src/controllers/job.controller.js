@@ -1,37 +1,68 @@
 const JobApplication = require("../models/JobApplication");
 
-// CREATE job
+
+// CREATE JOB
 exports.createJob = async (req, res) => {
   try {
+
+    const { company, role, status, followUpDate, notes } = req.body;
+
+    if (!company || !role) {
+      return res.status(400).json({ message: "Company and role required" });
+    }
+
     const job = await JobApplication.create({
       user: req.user._id,
-      ...req.body,
+      company,
+      role,
+      status,
+      followUpDate,
+      notes
     });
 
     res.status(201).json(job);
+
   } catch (error) {
+
     console.error("CREATE JOB ERROR:", error);
-    res.status(500).json({ message: "Failed to create job" });
+
+    res.status(500).json({
+      message: "Failed to create job",
+      error: error.message
+    });
+
   }
 };
 
-// GET all jobs of logged-in user
+
+
+// GET ALL JOBS
 exports.getJobs = async (req, res) => {
   try {
+
     const jobs = await JobApplication.find({
-      user: req.user._id,
+      user: req.user._id
     }).sort({ createdAt: -1 });
 
     res.json(jobs);
+
   } catch (error) {
+
     console.error("GET JOBS ERROR:", error);
-    res.status(500).json({ message: "Failed to fetch jobs" });
+
+    res.status(500).json({
+      message: "Failed to fetch jobs"
+    });
+
   }
 };
 
-// UPDATE job
+
+
+// UPDATE JOB STATUS
 exports.updateJob = async (req, res) => {
   try {
+
     const job = await JobApplication.findOneAndUpdate(
       { _id: req.params.id, user: req.user._id },
       req.body,
@@ -43,8 +74,14 @@ exports.updateJob = async (req, res) => {
     }
 
     res.json(job);
+
   } catch (error) {
+
     console.error("UPDATE JOB ERROR:", error);
-    res.status(500).json({ message: "Failed to update job" });
+
+    res.status(500).json({
+      message: "Failed to update job"
+    });
+
   }
 };

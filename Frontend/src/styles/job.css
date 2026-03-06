@@ -1,70 +1,211 @@
-.resume-page {
-  max-width: 700px;
-  margin: auto;
+.job-tracker-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
-.subtitle {
-  color: #64748b;
-  margin-bottom: 1.5rem;
+.page-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
 }
 
-.resume-card {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  padding: 1.5rem;
-  margin-bottom: 2rem;
-}
-
-.resume-card label {
-  display: block;
-  font-weight: 500;
-  margin-bottom: 0.3rem;
-}
-
-.resume-card input {
-  width: 100%;
-  padding: 0.6rem;
-  margin-bottom: 1rem;
-  border-radius: 8px;
-  border: 1px solid #cbd5f5;
-}
-
-.resume-card button {
-  background: #4f46e5;
-  color: white;
-  border: none;
-  padding: 0.6rem 1.2rem;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.success {
-  display: inline-block;
-  margin-left: 1rem;
-  color: #16a34a;
-  font-weight: 500;
-}
-
-.resume-preview {
-  border-top: 1px solid #e5e7eb;
-  padding-top: 1.5rem;
-}
-
-.resume-preview h2 {
+.page-header h1 {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #111827;
   margin-bottom: 0.5rem;
 }
 
-.skills {
-  display: flex;
-  gap: 0.5rem;
-  flex-wrap: wrap;
+.page-header p {
+  color: #6b7280;
+  font-size: 1.1rem;
 }
 
-.skills span {
-  background: #eef2ff;
-  color: #4338ca;
-  padding: 0.3rem 0.7rem;
+/* ─── FORM ─── */
+.add-job-form {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  padding: 2rem;
+  margin-bottom: 3rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem 1.8rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: #374151;
+  font-size: 0.95rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 0.75rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.btn-add {
+  grid-column: 1 / -1;
+  margin-top: 1rem;
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 0.9rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-add:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+/* ─── JOB CARDS ─── */
+.jobs-container {
+  margin-top: 1rem;
+}
+
+.jobs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.job-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+  border: 1px solid #e5e7eb;
+  transition: all 0.2s;
+}
+
+.job-card:hover {
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  transform: translateY(-4px);
+}
+
+.job-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.8rem;
+}
+
+.company {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+}
+
+.status-badge {
+  padding: 0.35rem 0.9rem;
   border-radius: 999px;
   font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.status-badge.applied { background: #dbeafe; color: #1e40af; }
+.status-badge.interview { background: #ede9fe; color: #6d28d9; }
+.status-badge.rejected { background: #fee2e2; color: #b91c1c; }
+.status-badge.selected { background: #d1fae5; color: #065f46; }
+
+.role-name {
+  font-size: 1.05rem;
+  color: #374151;
+  margin: 0.4rem 0 0.8rem;
+}
+
+.follow-up {
+  font-size: 0.95rem;
+  color: #4b5563;
+  margin: 0.6rem 0;
+}
+
+.notes-preview {
+  font-size: 0.95rem;
+  color: #6b7280;
+  margin-top: 0.8rem;
+  line-height: 1.5;
+}
+
+.status-control {
+  margin-top: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.status-control label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #4b5563;
+}
+
+.status-control select {
+  padding: 0.6rem;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+}
+
+/* Empty & Loading */
+.empty-state {
+  text-align: center;
+  padding: 5rem 1rem;
+  color: #6b7280;
+}
+
+.empty-state p {
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+}
+
+.loading {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #4b5563;
+  padding: 6rem 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
 }
