@@ -5,6 +5,7 @@ import api from "../api/axios";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+
   const navigate = useNavigate();
 
   const [user, setUser] = useState(null);
@@ -13,84 +14,122 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
+
     const storedUser = localStorage.getItem("user");
     const storedToken = localStorage.getItem("token");
 
     if (storedUser && storedToken) {
+
       setUser(JSON.parse(storedUser));
       setIsAuthenticated(true);
+
+      api.defaults.headers.common["Authorization"] = `Bearer ${storedToken}`;
+
     }
+
   }, []);
 
   const register = async ({ name, email, password }) => {
+
     setLoading(true);
     setError(null);
 
     try {
+
       const { data } = await api.post("/auth/register", {
         name,
         email,
-        password,
+        password
       });
 
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
 
+      api.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
+
       setUser(data.user);
       setIsAuthenticated(true);
+
       navigate("/dashboard");
+
     } catch (err) {
+
       setError(
         err.response?.data?.message ||
         err.response?.data?.error ||
         "Registration failed"
       );
+
     } finally {
       setLoading(false);
     }
   };
 
   const login = async (email, password) => {
+
     setLoading(true);
     setError(null);
 
     try {
+
       const { data } = await api.post("/auth/login", {
         email,
-        password,
+        password
       });
 
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
 
+      api.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
+
       setUser(data.user);
       setIsAuthenticated(true);
+
       navigate("/dashboard");
+
     } catch (err) {
+
       setError(
         err.response?.data?.message ||
         err.response?.data?.error ||
         "Login failed"
       );
+
     } finally {
       setLoading(false);
     }
   };
 
   const logout = () => {
-    localStorage.clear();
+
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+
+    delete api.defaults.headers.common["Authorization"];
+
     setUser(null);
     setIsAuthenticated(false);
+
     navigate("/login");
+
   };
 
   return (
     <AuthContext.Provider
-      value={{ user, loading, error, isAuthenticated, register, login, logout }}
+      value={{
+        user,
+        loading,
+        error,
+        isAuthenticated,
+        register,
+        login,
+        logout
+      }}
     >
       {children}
     </AuthContext.Provider>
   );
+
 };
 
 export const useAuth = () => useContext(AuthContext);

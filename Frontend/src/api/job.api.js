@@ -18,3 +18,8 @@ export const updateJobStatus = async (id, status) => {
 export const deleteJob = async (id) => {
   await API.delete(`/jobs/${id}`);
 };
+
+export const getUpcomingFollowUps = async () => {
+  const res = await API.get("/jobs/upcoming");
+  return res.data;
+};

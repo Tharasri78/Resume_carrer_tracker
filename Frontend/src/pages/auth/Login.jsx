@@ -31,7 +31,7 @@ const Login = () => {
         {/* Left Card - Welcome Section */}
         <div className="auth-left">
           <div className="auth-left-content">
-            <h1>Welcome Back! 👋</h1>
+            <h1>Welcome Back! </h1>
             <p>Your job search journey continues here. Track applications, manage resumes, and land your dream job.</p>
             
             {/* <div className="auth-left-features">

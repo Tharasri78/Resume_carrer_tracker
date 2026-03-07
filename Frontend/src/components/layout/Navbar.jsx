@@ -1,17 +1,33 @@
-import { Link } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+import NotificationBell from "../common/NotificationBell";
 import "../../styles/navbar.css";
 
 export default function Navbar() {
+
+  const { user, logout } = useAuth();
+
   return (
     <nav className="navbar">
-      <div className="nav-container">
-        <div className="logo">ResumeTracker</div>
 
-        <div className="nav-actions">
-          <Link to="/login" className="nav-link">Login</Link>
-          <Link to="/register" className="btn-primary">Sign up</Link>
-        </div>
+      <div className="nav-left">
+        <h3>ResumeTracker</h3>
       </div>
+
+      <div className="nav-right">
+
+        {/* Notification Bell */}
+        <NotificationBell />
+
+        <span className="user-name">
+          {user?.name}
+        </span>
+
+        <button onClick={logout} className="logout-btn">
+          Logout
+        </button>
+
+      </div>
+
     </nav>
   );
 }

@@ -85,3 +85,22 @@ exports.updateJob = async (req, res) => {
 
   }
 };
+
+exports.getUpcomingFollowUps = async (req, res) => {
+  try {
+
+    const today = new Date();
+
+    const jobs = await JobApplication.find({
+      user: req.user._id,
+      followUpDate: { $gte: today }
+    })
+    .sort({ followUpDate: 1 })
+    .limit(5);
+
+    res.json(jobs);
+
+  } catch (err) {
+    res.status(500).json({ message: "Failed to fetch follow-ups" });
+  }
+};
