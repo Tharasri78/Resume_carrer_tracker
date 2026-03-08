@@ -1,156 +1,215 @@
 # Resume Job Tracker
 
-A full-stack MERN application that helps users organize and track their job search.
-Users can manage job applications, track interview stages, store resumes, and receive follow-up notifications from a centralized dashboard.
+A **full-stack MERN application** designed to help users efficiently manage and track their job search process.
+The platform allows users to **store job applications, track interview progress, manage resumes, and receive follow-up reminders** from a centralized dashboard.
+
+The project demonstrates **secure authentication, REST API development, database management, and full-stack deployment using modern web technologies.**
 
 ---
 
-## Live Application
+# Live Application
 
-Live:
-https://resume-job-tracker-bay.vercel.app
-
-
----
-
-## Features
-
-* User authentication (JWT based login & registration)
-* Secure protected routes
-* Job application tracking
-* Resume management
-* Application status tracking (Applied, Interview, Rejected, Selected)
-* Dashboard statistics
-* Follow-up reminders
-* Notification system
-* Responsive user interface
+Live Application
+[https://resume-job-tracker-bay.vercel.app](https://resume-job-tracker-bay.vercel.app)
 
 ---
 
-## Tech Stack
+# Key Features
 
-Frontend
+• Secure user authentication using JWT
+• Protected routes for authorized access
+• Job application management system
+• Resume storage and organization
+• Application status tracking
 
-* React
+* Applied
+* Interview
+* Rejected
+* Selected
+
+• Dashboard statistics for job progress
+• Follow-up reminder system
+• Notification management
+• Responsive and user-friendly interface
+
+---
+
+# Tech Stack
+
+## Frontend
+
+* React.js
 * Vite
 * Axios
 * React Router
 
-Backend
+## Backend
 
 * Node.js
 * Express.js
 * JWT Authentication
 
-Database
+## Database
 
 * MongoDB Atlas
 
-Deployment
+## Deployment
 
-* Vercel (Frontend)
-* Render (Backend)
-
----
-
-## Project Architecture
-
-Client → React Application (Vercel)
-API → Node.js / Express Server (Render)
-Database → MongoDB Atlas
+* Frontend: Vercel
+* Backend: Render
 
 ---
 
-## Folder Structure
+# System Architecture
 
-Frontend
+```
+React Client (Vercel)
+        │
+        ▼
+Node.js + Express API (Render)
+        │
+        ▼
+MongoDB Atlas Database
+```
 
-src
-api – API request services
-components – reusable UI components
-context – authentication state management
-pages – application views
-styles – CSS modules
-
-Backend
-
-src
-routes – API route definitions
-controllers – request handlers
-models – MongoDB schemas
-middleware – authentication and error handling
-utils – helper functions
+1. The **React frontend** handles the user interface and user interactions.
+2. The **Express backend** provides REST APIs for authentication, job management, and notifications.
+3. **MongoDB Atlas** stores user data, job applications, and related information.
 
 ---
 
-## Environment Variables
+# Project Structure
 
-Frontend
+## Frontend
 
+```
+frontend
+ └── src
+     ├── api          # API request services
+     ├── components   # Reusable UI components
+     ├── context      # Authentication state management
+     ├── pages        # Application pages
+     └── styles       # CSS files
+```
+
+## Backend
+
+```
+backend
+ └── src
+     ├── routes        # API route definitions
+     ├── controllers   # Business logic
+     ├── models        # MongoDB schemas
+     ├── middleware    # Authentication & error handling
+     └── utils         # Helper functions
+```
+
+---
+
+# Environment Variables
+
+## Frontend
+
+```
 VITE_API_BASE_URL=https://resume-job-tracker-1.onrender.com/api
+```
 
-Backend
+## Backend
 
+```
 PORT=5000
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_secure_secret_key
+```
 
 ---
 
-## Installation
+# Installation & Setup
 
-Clone the repository
+## 1. Clone the Repository
 
+```
 git clone https://github.com/Tharasri78/Resume_carrer_tarcker
-
-Install backend dependencies
-
-cd Backend
-npm install
-
-Run backend server
-
-npm run dev
-
-Install frontend dependencies
-
-cd Frontend
-npm install
-
-Run frontend
-
-npm run dev
+cd Resume_carrer_tarcker
+```
 
 ---
 
-## API Endpoints
+## 2. Run Backend
 
-Authentication
+```
+cd backend
+npm install
+npm run dev
+```
+
+Backend server will start on:
+
+```
+http://localhost:5000
+```
+
+---
+
+## 3. Run Frontend
+
+```
+cd frontend
+npm install
+npm run dev
+```
+
+Frontend will run on:
+
+```
+http://localhost:5173
+```
+
+---
+
+# API Endpoints
+
+## Authentication
+
+```
 POST /api/auth/register
 POST /api/auth/login
+```
 
-Jobs
-GET /api/jobs
-POST /api/jobs
-PUT /api/jobs/:id
+## Job Management
+
+```
+GET    /api/jobs
+POST   /api/jobs
+PUT    /api/jobs/:id
 DELETE /api/jobs/:id
+```
 
-Dashboard
+## Dashboard
+
+```
 GET /api/dashboard/stats
+```
 
-Notifications
+## Notifications
+
+```
 GET /api/notifications
+```
 
 ---
 
-## Author
+# Author
 
-Thara Sri
-BBA Computer Science
-KG College of Arts and Science
+**Thara Sri**
+
+GitHub
+[https://github.com/Tharasri78](https://github.com/Tharasri78)
 
 ---
 
-## License
+# License
 
-This project is intended for learning and portfolio demonstration.
+This project is developed for **learning and portfolio demonstration purposes**.
+
+---
