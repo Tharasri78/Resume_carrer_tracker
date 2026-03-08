@@ -10,13 +10,12 @@ const notificationRoutes = require("./routes/notification.routes");
 
 const app = express();
 
-// Middleware
 
 // Middleware
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://resume-carrer-tracker.vercel.app"
+    "https://resume-job-tracker-bay.vercel.app"
   ],
   credentials: true
 }));
