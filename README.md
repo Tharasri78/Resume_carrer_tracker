@@ -7,7 +7,7 @@ Users can manage job applications, track interview stages, store resumes, and re
 
 ## Live Application
 
-Frontend
+Live:
 https://resume-job-tracker-bay.vercel.app
 
 
