@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
+import { registerUser, loginUser } from "../api/auth.api";
 
 const AuthContext = createContext();
 
@@ -31,74 +32,73 @@ export const AuthProvider = ({ children }) => {
 
   const register = async ({ name, email, password }) => {
 
-    setLoading(true);
-    setError(null);
+  setLoading(true);
+  setError(null);
 
-    try {
+  try {
 
-      const { data } = await api.post("/auth/register", {
-        name,
-        email,
-        password
-      });
+    const data = await registerUser({
+      name,
+      email,
+      password
+    });
 
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("user", JSON.stringify(data.user));
 
-      api.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
+    api.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
 
-      setUser(data.user);
-      setIsAuthenticated(true);
+    setUser(data.user);
+    setIsAuthenticated(true);
 
-      navigate("/dashboard");
+    navigate("/dashboard");
 
-    } catch (err) {
+  } catch (err) {
 
-      setError(
-        err.response?.data?.message ||
-        err.response?.data?.error ||
-        "Registration failed"
-      );
+    setError(
+      err.response?.data?.message ||
+      err.response?.data?.error ||
+      "Registration failed"
+    );
 
-    } finally {
-      setLoading(false);
-    }
-  };
+  } finally {
+    setLoading(false);
+  }
+};
+const login = async (email, password) => {
 
-  const login = async (email, password) => {
+  setLoading(true);
+  setError(null);
 
-    setLoading(true);
-    setError(null);
+  try {
 
-    try {
+    const data = await loginUser({
+      email,
+      password
+    });
 
-      const { data } = await api.post("/auth/login", {
-        email,
-        password
-      });
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("user", JSON.stringify(data.user));
 
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
+    api.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
 
-      api.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
+    setUser(data.user);
+    setIsAuthenticated(true);
 
-      setUser(data.user);
-      setIsAuthenticated(true);
+    navigate("/dashboard");
 
-      navigate("/dashboard");
+  } catch (err) {
 
-    } catch (err) {
+    setError(
+      err.response?.data?.message ||
+      err.response?.data?.error ||
+      "Login failed"
+    );
 
-      setError(
-        err.response?.data?.message ||
-        err.response?.data?.error ||
-        "Login failed"
-      );
-
-    } finally {
-      setLoading(false);
-    }
-  };
+  } finally {
+    setLoading(false);
+  }
+};
 
   const logout = () => {
 
