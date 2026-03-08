@@ -10,8 +10,6 @@ Users can manage job applications, track interview stages, store resumes, and re
 Frontend
 https://resume-job-tracker-bay.vercel.app
 
-Backend API
-https://resume-job-tracker-1.onrender.com
 
 ---
 
