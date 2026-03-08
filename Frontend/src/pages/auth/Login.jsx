@@ -59,7 +59,6 @@ const Login = () => {
         <div className="auth-right">
           <div className="auth-right-header">
             <h2>Sign In</h2>
-            <p>Welcome back! Please enter your details</p>
           </div>
 
           <div className="auth-card">

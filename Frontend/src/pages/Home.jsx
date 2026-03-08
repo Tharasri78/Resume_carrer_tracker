@@ -124,7 +124,7 @@ const Home = () => {
               <span className="feature-icon">📄</span>
             </div>
             <h3>Resume Builder</h3>
-            <p>Create ATS-friendly resumes with our professional templates and builder.</p>
+            <p>Create  resumes with our professional templates and builder.</p>
             <ul className="feature-list">
               <li>✓ Professional templates</li>
               <li>✓ ATS optimized</li>
@@ -226,7 +226,7 @@ const Home = () => {
         </div>
 
         <div className="footer-bottom">
-          <p>© 2024 JobTracker. All rights reserved.</p>
+          <p>© 2026 JobTracker. All rights reserved.</p>
         </div>
       </footer>
     </div>

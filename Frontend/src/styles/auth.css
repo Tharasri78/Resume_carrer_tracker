@@ -424,6 +424,13 @@
   color: #0077b5;
 }
 
+.auth-error {
+  color: #ff4d4f;
+  font-size: 0.9rem;
+  margin-top: -10px;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
 /* Error Message */
 .error-message {
   background-color: #ffebee;
