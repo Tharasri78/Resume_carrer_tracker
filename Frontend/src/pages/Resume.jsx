@@ -222,27 +222,27 @@ useEffect(() => {
             <div className="form-grid">
               <div className="form-group">
                 <label>Full Name</label>
-                <input name="fullName" value={formData.fullName} onChange={handleChange} placeholder="THARASRI B" required />
+                <input name="fullName" value={formData.fullName} onChange={handleChange}  required />
               </div>
               <div className="form-group">
                 <label>Email</label>
-                <input name="email" type="email" value={formData.email} onChange={handleChange} placeholder="tharasribaskaran@gmail.com" />
+                <input name="email" type="email" value={formData.email} onChange={handleChange} />
               </div>
               <div className="form-group">
                 <label>Phone</label>
-                <input name="phone" value={formData.phone} onChange={handleChange} placeholder="+91-8610288700" />
+                <input name="phone" value={formData.phone} onChange={handleChange} placeholder="+91" />
               </div>
               <div className="form-group">
                 <label>Location</label>
-                <input name="location" value={formData.location} onChange={handleChange} placeholder="Coimbatore" />
+                <input name="location" value={formData.location} onChange={handleChange}  />
               </div>
               <div className="form-group">
                 <label>LinkedIn</label>
-                <input name="linkedin" value={formData.linkedin} onChange={handleChange} placeholder="www.linkedin.com/in/tharasri/" />
+                <input name="linkedin" value={formData.linkedin} onChange={handleChange}  />
               </div>
               <div className="form-group">
                 <label>GitHub</label>
-                <input name="github" value={formData.github} onChange={handleChange} placeholder="https://github.com/Tharasri78" />
+                <input name="github" value={formData.github} onChange={handleChange} />
               </div>
             </div>
 
@@ -272,11 +272,11 @@ useEffect(() => {
                 <div className="form-grid">
                   <div className="form-group">
                     <label>Role</label>
-                    <input name="title" value={exp.title} onChange={e => handleChange(e, "experiences", idx)} placeholder="dev" />
+                    <input name="title" value={exp.title} onChange={e => handleChange(e, "experiences", idx)}  />
                   </div>
                   <div className="form-group">
                     <label>Company</label>
-                    <input name="company" value={exp.company} onChange={e => handleChange(e, "experiences", idx)} placeholder="Tech" />
+                    <input name="company" value={exp.company} onChange={e => handleChange(e, "experiences", idx)} />
                   </div>
                   <div className="form-group">
                     <label>Duration</label>
@@ -284,7 +284,7 @@ useEffect(() => {
                   </div>
                 </div>
                 <div className="form-group">
-                  <label>Description (use bullets with •)</label>
+                  <label>Description</label>
                   <textarea
                     name="description"
                     value={exp.description}
@@ -310,11 +310,11 @@ useEffect(() => {
                 <div className="form-grid">
                   <div className="form-group">
                     <label>Degree</label>
-                    <input name="degree" value={edu.degree} onChange={e => handleChange(e, "education", idx)} placeholder="B.TECH INFORMATION TECHNOLOGY" />
+                    <input name="degree" value={edu.degree} onChange={e => handleChange(e, "education", idx)}  />
                   </div>
                   <div className="form-group">
                     <label>Institution</label>
-                    <input name="institution" value={edu.institution} onChange={e => handleChange(e, "education", idx)} placeholder="KGISL Institute of Technology" />
+                    <input name="institution" value={edu.institution} onChange={e => handleChange(e, "education", idx)}  />
                   </div>
                   <div className="form-group">
                     <label>Year</label>
@@ -364,7 +364,7 @@ useEffect(() => {
             ) : (
               <>
                                 <h1 className="preview-name">{formData.fullName.toUpperCase()}</h1>
-                // Preview section - replace the contact part in your preview
+                
                 <div className="preview-contact">
                   {formData.phone && <span>{formData.phone}</span>}
                   {formData.email && <span> | {formData.email}</span>}
